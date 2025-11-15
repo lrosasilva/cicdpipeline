@@ -12,8 +12,8 @@ pipeline {
     agent any
 
     environment {
-        WEBEX_TOKEN   = credentials('WEBEX_TOKEN')     // Store your bot token here
-        WEBEX_ROOM_ID = credentials('WEBEX_ROOM_ID')   // Store your WebEx space ID here
+        WEBEX_TOKEN   = credentials('WEBEX_TOKEN')     // Your WebEx bot token
+        WEBEX_ROOM_ID = credentials('WEBEX_ROOM_ID')   // Your WebEx space ID
     }
 
     stages {
@@ -27,6 +27,13 @@ pipeline {
             steps {
                 sh 'chmod +x build.sh'
                 sh './build.sh'
+            }
+        }
+
+        stage('Run Sample Code') {
+            steps {
+                echo "Running sample_code.py..."
+                sh 'python3 sample_code.py'
             }
         }
 
