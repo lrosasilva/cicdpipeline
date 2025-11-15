@@ -12,7 +12,7 @@ class TestApp(unittest.TestCase):
         self.assertEqual(multiply(4, 5), 20)
 
     def test_divide(self):
-        self.assertEqual(divide(10, 5), 2)
+        self.assertEqual(divide(10, 2), 5)
         
     def test_divide_by_zero(self):
         with self.assertRaises(ValueError):
