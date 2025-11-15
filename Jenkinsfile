@@ -48,7 +48,7 @@ pipeline {
     post {
         success {
             script {
-                sendToWebex("Jenkins Build SUCCESS for ${env.JOB_NAME} #${env.BUILD_NUMBER}")
+                sendToWebex("JJenkins Build SUCCESS for ${env.JOB_NAME} #${env.BUILD_NUMBER}")
             }
         }
         failure {
