@@ -30,6 +30,12 @@ pipeline {
             }
         }
 
+        stage('Run Sample Code') {           // <<< NEW STAGE
+            steps {
+                sh 'python3 sample_code.py'  // Runs your script and prints to console
+            }
+        }
+
         stage('Test') {
             steps {
                 sh 'chmod +x test.sh'
