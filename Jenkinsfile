@@ -1,19 +1,10 @@
-def sendToWebex(String msg) { 
-    sh """
-        curl -X POST \
-        -H "Authorization: Bearer ${WEBEX_TOKEN}" \
-        -H "Content-Type: application/json" \
-        -d '{ "roomId": "${WEBEX_ROOM_ID}", "text": "${msg}" }' \
-        https://webexapis.com/v1/messages
-    """
-}
-
 pipeline {
-    agent any
-
+    agent {
+        docker { image 'python:3.12' }
+    }
     environment {
-        WEBEX_TOKEN   = credentials('WEBEX_TOKEN')     // Store your bot token here
-        WEBEX_ROOM_ID = credentials('WEBEX_ROOM_ID')   // Store your WebEx space ID here
+        WEBEX_TOKEN   = credentials('WEBEX_TOKEN')
+        WEBEX_ROOM_ID = credentials('WEBEX_ROOM_ID')
     }
 
     stages {
@@ -25,14 +16,15 @@ pipeline {
 
         stage('Build') {
             steps {
+                sh 'pip install --upgrade pip'
                 sh 'chmod +x build.sh'
                 sh './build.sh'
             }
         }
 
-        stage('Run Sample Code') {           // <<< NEW STAGE
+        stage('Run Sample Code') {
             steps {
-                sh 'python3 sample_code.py'  // Runs your script and prints to console
+                sh 'python3 sample_code.py'
             }
         }
 
